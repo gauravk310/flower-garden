@@ -357,8 +357,13 @@
             const x = e.clientX - rect.left;
             const clickY = e.clientY - rect.top;
 
-            // Define invisible ground level at 85% of canvas height
-            const groundY = canvas.height * 0.85;
+            // Define curved ground using a parabola
+            // Ground is highest at center and lower at edges
+            const centerX = canvas.width / 2;
+            const normalizedX = (x - centerX) / (canvas.width / 2); // -1 to 1
+            const curveDepth = 60; // How much the ground curves down at edges
+            const baseGroundY = canvas.height * 0.85;
+            const groundY = baseGroundY + (normalizedX * normalizedX * curveDepth);
 
             const color = colors[colorIndex];
             colorIndex = (colorIndex + 1) % colors.length;
